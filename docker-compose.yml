@@ -10,7 +10,7 @@ x-flyway-vars: &flyway-vars
   FLYWAY_URL: jdbc:postgresql://sampledb:5432/postgres
   FLYWAY_USER: *POSTGRES_USER
   FLYWAY_PASSWORD: *POSTGRES_PASSWORD
-  FLYWAY_BASELINE_ON_MIGRATE: true
+  FLYWAY_BASELINE_ON_MIGRATE: "true"
 
 x-postgres-vars: &postgres-vars
   POSTGRES_HOST: sampledb
@@ -19,12 +19,12 @@ x-postgres-vars: &postgres-vars
   POSTGRES_DATABASE: *POSTGRES_DATABASE
 
 x-python-vars: &python-vars
-  PIP_NO_CACHE_DIR: off
-  PIP_DISABLE_PIP_VERSION_CHECK: on
+  PIP_NO_CACHE_DIR: "false"
+  PIP_DISABLE_PIP_VERSION_CHECK: "true"
   PIP_DEFAULT_TIMEOUT: 100
   POETRY_VERSION: 1.8.3
   POETRY_HOME: /opt/poetry
-  POETRY_VIRTUALENVS_IN_PROJECT: true
+  POETRY_VIRTUALENVS_IN_PROJECT: "true"
   POETRY_NO_INTERACTION: 1
   PYSETUP_PATH: /application
   VENV_PATH: /application/.venv
@@ -62,15 +62,13 @@ services:
         condition: service_healthy
 
   housing-api:
-    image: python:3.12
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: housing-api
-    entrypoint: /application/start-local.sh
-    volumes: [".:/application", "/application/.venv"]
     environment:
       <<: [*postgres-vars, *python-vars]
     ports: ["3003:3000"]
     depends_on:
       housing-migration:
         condition: service_started
-
- 
