@@ -13,3 +13,5 @@
       * Added `build` instruction to build from local Dockerfile
       * Removed use of volumes, in preference of files built into container
       * Removed `entrypoint`, Dockerfile defines appropriate entrypoint already
+ * Added `INSTRUCTIONS.md`
+ * Added GitHub workflow for multi-arch publishing at `.github/workflows/publish-docker-image.yml`

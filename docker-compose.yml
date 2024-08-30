@@ -62,6 +62,7 @@ services:
         condition: service_healthy
 
   housing-api:
+ #   image: ghcr.io/vancwo/sample-api:main # If you want to use a prebuilt docker image, uncomment this and remove the build: key
     build:
       context: .
       dockerfile: Dockerfile
