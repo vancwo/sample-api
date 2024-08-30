@@ -15,4 +15,8 @@ First, to create the database server and begin the database cloning process, the
 
 Next, I would define a deployment file for the `sample-api` container. This would handle the deployment of the API service. In this deployment, I would include the flyway migration container as an `initContainer`. This ensures that database migrations are always ran before upgrades. If there's concerns about prior versions of the application continuing to run when the migration is ongoing, I would set the deployment's `.spec.strategy.type` to `Recreate` to ensure any existing pods are killed before new ones are created.
 
+Finally, I would define any necessary networking components, depending on the environment. This could include defining `Ingress` and `Service` resources to allow external connectivity.
+
+Once the helm chart is complete, it could be deployed to the OpenShift cluster. Once installed, the database server would be created, a clone of the production database would be performed, flyway migrations would be ran, then finally the api server would be started.
+
 There's also several improvements to this test environment that could be made in the future. For instance, flyway could run as a helm `pre-install` / `pre-upgrade` hook, so that it's only run once during installs / upgrades rather than as an initContainer for each pod that spins up. It's debatable whether this is desirable, as many people dislike the use of hooks in favor of fast idempotent initContainers. Proper RBAC could also be included as needed.
