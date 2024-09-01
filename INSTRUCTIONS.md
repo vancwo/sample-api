@@ -7,8 +7,6 @@
 
 # Question 3:
 
-Note: I don't have experience with OpenShift, but from what I gather it's Kubernetes with batteries included.
-
 To create a test environment for this API, I would create a helm chart to define all necessary components to deploy.
 
 First, to create the database server and begin the database cloning process, the Crunchy Postgres for Kubernetes Operator provides facilities for database creation and cloning. You can define a `PostgresCluster` resource that tells the operator to create a Postgres DB, using the production Postgres DB as the `dataSource`. I would include this resource in my helm templates. Note that it's possible to use databases in other namespaces as the source of your clone.
